@@ -1,0 +1,23 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+import Flight.SeatClass;
+
+// $FF: synthetic class
+class Flight$1 {
+   static {
+      try {
+         $SwitchMap$Flight$SeatClass[SeatClass.ECONOMY.ordinal()] = 1;
+      } catch (NoSuchFieldError var3) {
+      }
+
+      try {
+         $SwitchMap$Flight$SeatClass[SeatClass.BUSINESS.ordinal()] = 2;
+      } catch (NoSuchFieldError var2) {
+      }
+
+      try {
+         $SwitchMap$Flight$SeatClass[SeatClass.FIRST_CLASS.ordinal()] = 3;
+      } catch (NoSuchFieldError var1) {
+      }
+
+   }
+}
