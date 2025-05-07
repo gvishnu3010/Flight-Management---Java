@@ -1,0 +1,56 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+public class Passenger {
+   private String name;
+   private String email;
+   private String phoneNumber;
+   private Flight$SeatClass seatClass;
+   private int numSeats;
+
+   public Passenger(String var1, String var2, String var3, Flight$SeatClass var4, int var5) {
+      this.name = var1;
+      this.email = var2;
+      this.phoneNumber = var3;
+      this.seatClass = var4;
+      this.numSeats = var5;
+   }
+
+   public String getName() {
+      return this.name;
+   }
+
+   public void setName(String var1) {
+      this.name = var1;
+   }
+
+   public String getEmail() {
+      return this.email;
+   }
+
+   public void setEmail(String var1) {
+      this.email = var1;
+   }
+
+   public String getPhoneNumber() {
+      return this.phoneNumber;
+   }
+
+   public void setPhoneNumber(String var1) {
+      this.phoneNumber = var1;
+   }
+
+   public Flight$SeatClass getSeatClass() {
+      return this.seatClass;
+   }
+
+   public void setSeatClass(Flight$SeatClass var1) {
+      this.seatClass = var1;
+   }
+
+   public int getNumSeats() {
+      return this.numSeats;
+   }
+
+   public void setNumSeats(int var1) {
+      this.numSeats = var1;
+   }
+}
