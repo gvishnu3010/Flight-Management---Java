@@ -1,0 +1,382 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+import Flight.SeatClass;
+import FlightDemo.1;
+import java.io.PrintStream;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Scanner;
+
+public class FlightDemo {
+   public FlightDemo() {
+   }
+
+   public static void main(String[] var0) {
+      Scanner var1 = new Scanner(System.in);
+      Flight[] var2 = new Flight[]{new Flight("Vistara", "VI101", "Hyderabad", "Mumbai", 1148, createDate(2024, 4, 25, 10, 30)), new Flight("Indigo", "IN102", "Hyderabad", "Mumbai", 1500, createDate(2024, 4, 25, 12, 0)), new Flight("Air India", "AI103", "Hyderabad", "Mumbai", 500, createDate(2024, 4, 26, 14, 30)), new Flight("Vistara", "VI101", "Hyderabad", "Delhi", 1148, createDate(2024, 4, 25, 10, 0)), new Flight("Indigo", "IN102", "Hyderabad", "Delhi", 1500, createDate(2024, 4, 25, 12, 30)), new Flight("Air India", "AI103", "Hyderabad", "Delhi", 500, createDate(2024, 4, 26, 14, 0)), new Flight("Vistara", "VI101", "Hyderabad", "Bengaluru", 1148, createDate(2024, 4, 25, 10, 45)), new Flight("Indigo", "IN102", "Hyderabad", "Bengaluru", 1500, createDate(2024, 4, 25, 12, 15)), new Flight("Air India", "AI103", "Hyderabad", "Bengaluru", 500, createDate(2024, 4, 26, 14, 15))};
+      boolean var3 = false;
+
+      while(!var3) {
+         System.out.println("Select an option:");
+         System.out.println("1. Book a ticket");
+         System.out.println("2. View Booking");
+         System.out.println("3. Reserve a ticket");
+         System.out.println("4. View my reservations");
+         System.out.println("5. Cancel my reservation");
+         System.out.println("6. Exit");
+         int var4 = var1.nextInt();
+         var1.nextLine();
+         if (var4 == 6) {
+            System.out.println("Exiting...");
+            break;
+         }
+
+         System.out.println("Enter passenger details:");
+         System.out.print("Name: ");
+         String var5 = var1.nextLine();
+         var5 = validateName(var5);
+         if (var5 == null) {
+            System.out.println("Invalid name. Name should only contain alphabets.");
+         } else {
+            System.out.print("Email: ");
+            String var6 = var1.nextLine();
+            var6 = validateEmail(var6);
+            if (var6 == null) {
+               System.out.println("Invalid email format.");
+            } else {
+               System.out.print("Phone Number: ");
+               String var7 = var1.nextLine();
+               var7 = validatePhoneNumber(var7);
+               if (var7 == null) {
+                  System.out.println("Invalid phone number. Phone number should not contain alphabets.");
+               } else {
+                  switch (var4) {
+                     case 1:
+                        bookTicket(var1, var2, var5, var6, var7);
+                        break;
+                     case 2:
+                        viewBooking(var1, var2);
+                        break;
+                     case 3:
+                        reserveTicket(var1, var2, var5, var6, var7);
+                        break;
+                     case 4:
+                        viewReservations(var1, var2);
+                        break;
+                     case 5:
+                        cancelReservation(var1, var2);
+                        break;
+                     default:
+                        System.out.println("Invalid choice.");
+                  }
+               }
+            }
+         }
+      }
+
+      var1.close();
+   }
+
+   private static void viewReservations(Scanner var0, Flight[] var1) {
+      System.out.println("Current Reservations: ");
+      Flight[] var2 = var1;
+      int var3 = var1.length;
+
+      for(int var4 = 0; var4 < var3; ++var4) {
+         Flight var5 = var2[var4];
+         int var6 = 1;
+
+         for(Iterator var7 = var5.getReservations().iterator(); var7.hasNext(); ++var6) {
+            Reservation var8 = (Reservation)var7.next();
+            Passenger var9 = var8.getPassenger();
+            System.out.println("" + var6 + ". Passenger: " + var9.getName() + ", Flight: " + var5.getFlightNumber());
+         }
+      }
+
+   }
+
+   private static void viewBooking(Scanner var0, Flight[] var1) {
+      System.out.println("Current Bookings: ");
+      Flight[] var2 = var1;
+      int var3 = var1.length;
+
+      for(int var4 = 0; var4 < var3; ++var4) {
+         Flight var5 = var2[var4];
+         int var6 = 1;
+
+         for(Iterator var7 = var5.getReservations().iterator(); var7.hasNext(); ++var6) {
+            Reservation var8 = (Reservation)var7.next();
+            Passenger var9 = var8.getPassenger();
+            System.out.println("" + var6 + ". Passenger: " + var9.getName() + ", Flight: " + var5.getFlightNumber());
+         }
+      }
+
+   }
+
+   private static void bookTicket(Scanner var0, Flight[] var1, String var2, String var3, String var4) {
+      System.out.print("Enter origin: ");
+      String var5 = var0.nextLine();
+      System.out.print("Enter destination: ");
+      String var6 = var0.nextLine();
+      System.out.println("Available Flights:");
+      Flight[] var7 = var1;
+      int var8 = var1.length;
+
+      for(int var9 = 0; var9 < var8; ++var9) {
+         Flight var10 = var7[var9];
+         if (var10.getOrigin().equalsIgnoreCase(var5) && var10.getDestination().equalsIgnoreCase(var6)) {
+            PrintStream var10000 = System.out;
+            String var10001 = var10.getFlightName();
+            var10000.println("Flight Name: " + var10001 + "  Departure Time: " + var10.getDepartureTime() + " Cost per Ticket: " + Flight.calculateTicketCost(var10));
+         }
+      }
+
+      System.out.print("Enter the Airline of your choice: ");
+      String var17 = var0.nextLine();
+      var17.toLowerCase();
+      if (validateFlightNumber(var17).equalsIgnoreCase("LMAO")) {
+         System.out.println("Invalid Choice.");
+      } else {
+         Flight var18 = null;
+         Flight[] var19 = var1;
+         int var21 = var1.length;
+
+         for(int var11 = 0; var11 < var21; ++var11) {
+            Flight var12 = var19[var11];
+            if (var12.getFlightName().equalsIgnoreCase(var17)) {
+               var18 = var12;
+               break;
+            }
+         }
+
+         if (var18 != null) {
+            System.out.println("Available seats:");
+            System.out.println("Economy: " + var18.getEconomySeatsAvailable());
+            System.out.println("Business: " + var18.getBusinessSeatsAvailable());
+            System.out.println("First Class: " + var18.getFirstClassSeatsAvailable());
+            System.out.print("Choose seat class (Economy/Business/First Class): ");
+            String var20 = var0.nextLine();
+
+            Flight$SeatClass var22;
+            try {
+               var22 = SeatClass.valueOf(var20.toUpperCase());
+            } catch (IllegalArgumentException var16) {
+               System.out.println("Invalid seat class. Please choose from available seat classes.");
+               return;
+            }
+
+            System.out.print("Would you like to add meals to your ticket(s):(Y/N) ");
+            char var23 = var0.next().charAt(0);
+            if (validatemealChoice(var23) == 'A') {
+               System.out.println("Invalid Choice");
+               return;
+            }
+
+            String var24 = var0.nextLine();
+            System.out.print("Enter the number of seats: ");
+            int var13 = var0.nextInt();
+            var0.nextLine();
+            if (var18.bookTickets(new Passenger(var2, var3, var4, var22, var13), var22, var13)) {
+               double var14 = calculateCost(var22, var23, Flight.calculateTicketCost(var18)) * (double)var13;
+               System.out.println("Booking confirmed for " + var2 + " on flight " + var18.getFlightNumber() + ".");
+               System.out.println("Flight Details:");
+               System.out.println("Airline: " + var18.getFlightName());
+               System.out.println("Origin: " + var5);
+               System.out.println("Destination: " + var6);
+               System.out.println("Departure Time: " + var18.getDepartureTime());
+               System.out.println("Date of travel: " + var18.getDepartureTime());
+               System.out.println("Seat Class: " + var20);
+               System.out.println("Special Requests: " + var24);
+               System.out.println("Number of Seats: " + var13);
+               System.out.println("Total Ticket Price: Rs" + var14);
+               System.out.println("Thank You for choosing our airline.Please collect your boarding pass at the airline counter");
+            } else {
+               System.out.println("Sorry, the selected seats are not available.");
+            }
+         } else {
+            System.out.println("Sorry, the flight from " + var5 + " to " + var6 + " is not available.");
+         }
+
+      }
+   }
+
+   private static void reserveTicket(Scanner var0, Flight[] var1, String var2, String var3, String var4) {
+      System.out.print("Enter origin: ");
+      String var5 = var0.nextLine();
+      System.out.print("Enter destination: ");
+      String var6 = var0.nextLine();
+      System.out.println("Available Flights:");
+      Flight[] var7 = var1;
+      int var8 = var1.length;
+
+      for(int var9 = 0; var9 < var8; ++var9) {
+         Flight var10 = var7[var9];
+         if (var10.getOrigin().equalsIgnoreCase(var5) && var10.getDestination().equalsIgnoreCase(var6)) {
+            PrintStream var10000 = System.out;
+            String var10001 = var10.getFlightName();
+            var10000.println("Flight Name: " + var10001 + "  Departure Time: " + var10.getDepartureTime() + " Cost per Ticket: " + Flight.calculateTicketCost(var10));
+         }
+      }
+
+      System.out.print("Enter the Airline of your choice: ");
+      String var14 = var0.nextLine();
+      var14.toLowerCase();
+      if (validateFlightNumber(var14).equalsIgnoreCase("LMAO")) {
+         System.out.println("Invalid Choice.");
+      } else {
+         Flight var15 = null;
+         Flight[] var16 = var1;
+         int var18 = var1.length;
+
+         int var11;
+         for(var11 = 0; var11 < var18; ++var11) {
+            Flight var12 = var16[var11];
+            if (var12.getFlightName().equalsIgnoreCase(var14)) {
+               var15 = var12;
+               break;
+            }
+         }
+
+         if (var15 != null) {
+            System.out.println("Available seats:");
+            System.out.println("Economy: " + var15.getEconomySeatsAvailable());
+            System.out.println("Business: " + var15.getBusinessSeatsAvailable());
+            System.out.println("First Class: " + var15.getFirstClassSeatsAvailable());
+            System.out.print("Choose seat class (Economy/Business/First Class): ");
+            String var17 = var0.nextLine();
+
+            Flight$SeatClass var19;
+            try {
+               var19 = SeatClass.valueOf(var17.toUpperCase());
+            } catch (IllegalArgumentException var13) {
+               System.out.println("Invalid seat class. Please choose from available seat classes.");
+               return;
+            }
+
+            System.out.print("Enter the number of seats: ");
+            var11 = var0.nextInt();
+            var0.nextLine();
+            if (var15.bookTickets(new Passenger(var2, var3, var4, var19, var11), var19, var11)) {
+               System.out.println("Reservation confirmed for " + var2 + " on flight " + var15.getFlightNumber() + ". Additional 500 Rs will be added.");
+               System.out.println("Please pay for your ticket at the airline counter.");
+            } else {
+               System.out.println("Sorry, the selected seats are not available.");
+            }
+         } else {
+            System.out.println("Sorry, the flight from " + var5 + " to " + var6 + " is not available.");
+         }
+
+      }
+   }
+
+   private static void cancelReservation(Scanner var0, Flight[] var1) {
+      System.out.println("Current Reservations:");
+      Flight[] var2 = var1;
+      int var3 = var1.length;
+
+      int var4;
+      int var6;
+      for(var4 = 0; var4 < var3; ++var4) {
+         Flight var5 = var2[var4];
+         var6 = 1;
+
+         for(Iterator var7 = var5.getReservations().iterator(); var7.hasNext(); ++var6) {
+            Reservation var8 = (Reservation)var7.next();
+            Passenger var9 = var8.getPassenger();
+            System.out.println("" + var6 + ". Passenger: " + var9.getName() + ", Flight: " + var5.getFlightNumber());
+         }
+      }
+
+      System.out.print("Enter the number of the reservation to cancel (1-): ");
+      int var10 = var0.nextInt();
+      var0.nextLine();
+      var3 = 0;
+      var4 = var10;
+      Flight[] var11 = var1;
+      var6 = var1.length;
+
+      for(int var12 = 0; var12 < var6; ++var12) {
+         Flight var13 = var11[var12];
+         if (var4 <= var13.getReservations().size()) {
+            boolean var14 = var13.cancelReservation((Reservation)var13.getReservations().get(var4 - 1));
+            if (var14) {
+               System.out.println("Reservation canceled successfully.");
+            } else {
+               System.out.println("Failed to cancel reservation.");
+            }
+
+            return;
+         }
+
+         var4 -= var13.getReservations().size();
+         ++var3;
+      }
+
+      System.out.println("Invalid reservation number.");
+   }
+
+   private static Date createDate(int var0, int var1, int var2, int var3, int var4) {
+      return new Date(var0 - 1900, var1 - 1, var2, var3, var4);
+   }
+
+   private static Flight findFlight(Flight[] var0, String var1, String var2) {
+      Flight[] var3 = var0;
+      int var4 = var0.length;
+
+      for(int var5 = 0; var5 < var4; ++var5) {
+         Flight var6 = var3[var5];
+         if (var6.getOrigin().equalsIgnoreCase(var1) && var6.getDestination().equalsIgnoreCase(var2)) {
+            return var6;
+         }
+      }
+
+      return null;
+   }
+
+   private static double calculateCost(Flight$SeatClass var0, char var1, double var2) {
+      double var4 = 0.0;
+      double var6 = 150.0;
+      double var8 = 200.0;
+      switch (1.$SwitchMap$Flight$SeatClass[var0.ordinal()]) {
+         case 1:
+            if (var1 == 'Y') {
+               return var4 + 50.0 + var2;
+            }
+
+            return var4 + var2;
+         case 2:
+            if (var1 == 'Y') {
+               return var6 + 50.0 + var2;
+            }
+
+            return var6 + var2;
+         case 3:
+            if (var1 == 'Y') {
+               return var8 + 50.0 + var2;
+            }
+
+            return var8 + var2;
+         default:
+            return 0.0;
+      }
+   }
+
+   private static String validateName(String var0) {
+      return var0.matches("[a-zA-Z ]+") ? var0 : null;
+   }
+
+   private static String validateEmail(String var0) {
+      return var0.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") ? var0 : null;
+   }
+
+   private static String validatePhoneNumber(String var0) {
+      return var0.matches("\\d{10}") ? var0 : null;
+   }
+
+   private static char validatemealChoice(char var0) {
+      return var0 != 'Y' && var0 != 'N' ? 'A' : var0;
+   }
+
+   private static String validateFlightNumber(String var0) {
+      return !var0.equalsIgnoreCase("vistara") && !var0.equalsIgnoreCase("indigo") && !var0.equalsIgnoreCase("air india") ? "LMAO" : var0;
+   }
+}
