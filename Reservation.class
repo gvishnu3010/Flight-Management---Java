@@ -1,0 +1,24 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+public class Reservation {
+   private Passenger passenger;
+   private Flight flight;
+   private Flight$SeatClass seatClass;
+
+   public Reservation(Passenger var1, Flight var2, Flight$SeatClass var3) {
+      this.passenger = var1;
+      this.flight = var2;
+      this.seatClass = var3;
+   }
+
+   public Passenger getPassenger() {
+      return this.passenger;
+   }
+
+   public Flight getFlight() {
+      return this.flight;
+   }
+
+   public Flight$SeatClass getSeatClass() {
+      return this.seatClass;
+   }
+}
